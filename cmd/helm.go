@@ -57,6 +57,7 @@ func getHelmRelease(release, context, namespace string) release.Release {
 	return *getRelease
 }
 
+// migrateRelease migrates your helm release between kubernetes clusters
 func migrateRelease(release, repo, namespace, sourceContext, targetContext string) {
 	releaseConfig := getHelmRelease(release, sourceContext, namespace)
 
