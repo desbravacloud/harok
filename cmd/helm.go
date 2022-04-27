@@ -25,11 +25,15 @@ func bytesToString(data []byte) string {
 
 // runHelm run a helm command from current context
 func runHelm(context, namespace string) helmclient.Client {
+	// set home env
 	home := os.Getenv("HOME")
+	// set kubeconfig path
 	kubeConfigPath := filepath.Join(home, ".kube", "config")
 
+	// set k8s context
 	setK8sContext(context, kubeConfigPath)
 
+	// run helm command
 	helm, err := helmclient.New(&helmclient.Options{
 		Namespace:        namespace,
 		RepositoryCache:  filepath.Join(home, ".cache/helm/repository"),
@@ -57,17 +61,31 @@ func getHelmRelease(release, context, namespace string) release.Release {
 	return *getRelease
 }
 
+//getAllHelmReleases get values from All helm releases in Source K8s Cluster
+func getAllHelmReleases(context, namespace string) []*release.Release {
+	getReleases, err := runHelm(context, namespace).ListDeployedReleases()
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	return getReleases
+}
+
 // migrateRelease migrates your helm release between kubernetes clusters
 func migrateRelease(release, repo, namespace, sourceContext, targetContext string) {
+	// get release information
 	releaseConfig := getHelmRelease(release, sourceContext, namespace)
 
+	// get release --set values and convert to json
 	valuesJson, err := json.Marshal(releaseConfig.Config)
 	if err != nil {
 		log.Fatal(err)
 	}
 	
+	// convert json values to string
 	values := bytesToString(valuesJson)
 	
+	// migrate release to target cluster
 	if _, err := runHelm(targetContext, releaseConfig.Namespace).InstallOrUpgradeChart(context.Background(), &helmclient.ChartSpec{
 		ReleaseName: releaseConfig.Name,
 		ChartName:   filepath.Join(repo, releaseConfig.Name),
@@ -78,7 +96,7 @@ func migrateRelease(release, repo, namespace, sourceContext, targetContext strin
 	}); err != nil {
 		log.Fatal(err)
 	} else {
-		fmt.Printf("Release \"%s\" migrated to cluster \"%s\"", releaseConfig.Name, targetContext)
+		fmt.Printf("Release \"%s\" migrated to cluster \"%s\"\n", releaseConfig.Name, targetContext)
 	}
 }
 
@@ -122,32 +140,49 @@ var migrateCmd = &cobra.Command{
 	Long:  `Migrate applications between Kubernetes clusters using helm`,
 	Run: func(cmd *cobra.Command, args []string) {
 
-		release, err := cmd.PersistentFlags().GetString("release")
+		all, err := cmd.Flags().GetBool("all")
 		if err != nil {
 			log.Fatal(err)
 		}
 
-		repo, err := cmd.PersistentFlags().GetString("repo")
+		repo, err := cmd.Flags().GetString("repo")
 		if err != nil {
 			log.Fatal(err)
 		}
 
-		namespace, err := cmd.PersistentFlags().GetString("namespace")
+		namespace, err := cmd.Flags().GetString("namespace")
 		if err != nil {
 			log.Fatal(err)
 		}
 
-		sourceContext, err := cmd.PersistentFlags().GetString("source")
+		sourceContext, err := cmd.Flags().GetString("source")
 		if err != nil {
 			log.Fatal(err)
 		}
 
-		targetContext, err := cmd.PersistentFlags().GetString("target")
+		targetContext, err := cmd.Flags().GetString("target")
 		if err != nil {
 			log.Fatal(err)
 		}
 
-		migrateRelease(release, repo, namespace, sourceContext, targetContext)	
+		// check if all is set to true or false and than migrate one or all releases
+		if all == false {
+			release, err := cmd.Flags().GetString("release")
+			if err != nil {
+				log.Fatal(err)
+			}
+
+			// migrate just one release
+			migrateRelease(release, repo, namespace, sourceContext, targetContext)
+		} else {
+			// get all helm releases
+			releases := getAllHelmReleases(sourceContext, namespace)
+
+			// loop for migrating all helm releases
+			for _, release := range releases {
+				migrateRelease(release.Name, repo, namespace, sourceContext, targetContext)
+			}
+		}
 	},
 }
 
@@ -159,14 +194,14 @@ func init() {
 	helmCmd.AddCommand(migrateCmd)
 
 	// Add flags to migrate subcommand
-	migrateCmd.PersistentFlags().StringP("release", "r", "", "Helm release name")
-	migrateCmd.MarkPersistentFlagRequired("release")
-	migrateCmd.PersistentFlags().StringP("repo", "", "", "Helm repository name")
-	migrateCmd.MarkPersistentFlagRequired("repo")
-	migrateCmd.PersistentFlags().StringP("namespace", "n", "", "Kubernetes namespace")
-	migrateCmd.MarkPersistentFlagRequired("namespace")
-	migrateCmd.PersistentFlags().StringP("source", "s", "", "Source Kubernetes cluster")
-	migrateCmd.MarkPersistentFlagRequired("source")
-	migrateCmd.PersistentFlags().StringP("target", "t", "", "Target Kubernetes cluster")
-	migrateCmd.MarkPersistentFlagRequired("target")
+	migrateCmd.Flags().StringP("release", "r", "", "Helm release name")
+	migrateCmd.Flags().BoolP("all", "", false, "Migrate all releases")
+	migrateCmd.Flags().StringP("repo", "", "", "Helm repository name")
+	migrateCmd.MarkFlagRequired("repo")
+	migrateCmd.Flags().StringP("namespace", "n", "", "Kubernetes namespace")
+	migrateCmd.MarkFlagRequired("namespace")
+	migrateCmd.Flags().StringP("source", "s", "", "Source Kubernetes cluster")
+	migrateCmd.MarkFlagRequired("source")
+	migrateCmd.Flags().StringP("target", "t", "", "Target Kubernetes cluster")
+	migrateCmd.MarkFlagRequired("target")
 }
