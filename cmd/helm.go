@@ -81,10 +81,10 @@ func migrateRelease(release, repo, namespace, sourceContext, targetContext strin
 	if err != nil {
 		log.Fatal(err)
 	}
-	
+
 	// convert json values to string
 	values := bytesToString(valuesJson)
-	
+
 	// migrate release to target cluster
 	if _, err := runHelm(targetContext, releaseConfig.Namespace).InstallOrUpgradeChart(context.Background(), &helmclient.ChartSpec{
 		ReleaseName: releaseConfig.Name,
@@ -130,7 +130,7 @@ var helmCmd = &cobra.Command{
 	Use:   "helm",
 	Short: "Manage helm releases",
 	Long:  `Manage your helm charts deployed in your Kubernetes cluster`,
-	Run: func(cmd *cobra.Command, args []string) {},
+	Run:   func(cmd *cobra.Command, args []string) {},
 }
 
 //migrateCmd migrate applications between clusters using helm

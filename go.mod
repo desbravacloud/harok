@@ -1,4 +1,4 @@
-module github.com/Spotlitebr/rocket.git
+module github.com/Spotlitebr/rocket
 
 go 1.18
 
