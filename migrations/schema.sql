@@ -25,7 +25,7 @@ SET default_table_access_method = heap;
 --
 
 CREATE TABLE public.apps (
-    id uuid NOT NULL,
+    id integer NOT NULL,
     name character varying(255) NOT NULL,
     hostname character varying(50) NOT NULL,
     language character varying(15) NOT NULL,
@@ -39,6 +39,28 @@ CREATE TABLE public.apps (
 ALTER TABLE public.apps OWNER TO app_harok;
 
 --
+-- Name: apps_id_seq; Type: SEQUENCE; Schema: public; Owner: app_harok
+--
+
+CREATE SEQUENCE public.apps_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.apps_id_seq OWNER TO app_harok;
+
+--
+-- Name: apps_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: app_harok
+--
+
+ALTER SEQUENCE public.apps_id_seq OWNED BY public.apps.id;
+
+
+--
 -- Name: schema_migration; Type: TABLE; Schema: public; Owner: app_harok
 --
 
@@ -48,6 +70,13 @@ CREATE TABLE public.schema_migration (
 
 
 ALTER TABLE public.schema_migration OWNER TO app_harok;
+
+--
+-- Name: apps id; Type: DEFAULT; Schema: public; Owner: app_harok
+--
+
+ALTER TABLE ONLY public.apps ALTER COLUMN id SET DEFAULT nextval('public.apps_id_seq'::regclass);
+
 
 --
 -- Name: apps apps_pkey; Type: CONSTRAINT; Schema: public; Owner: app_harok

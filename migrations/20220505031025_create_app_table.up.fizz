@@ -1,8 +1,12 @@
 create_table("apps") {
-    t.Column("id", "uuid", {primary: true})
+    t.Column("id", "integer", {primary: true})
     t.Column("name", "string", {})
     t.Column("hostname", "string", {"size": 50})
     t.Column("language", "string", {"size": 15})
     t.Column("code_repo", "string", {})
     t.Column("image_repo", "string", {})
 }
+
+sql("INSERT INTO apps values ('1', 'example', 'example.com.br','golang','git@github.com:Spotlitebr/example.git', 'docker.io', now(), now());")
+
+sql("INSERT INTO apps values ('2', 'foo', 'foo.com.br','python','git@github.com:Spotlitebr/foo.git', 'docker.io', now(), now());")
