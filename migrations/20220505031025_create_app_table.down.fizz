@@ -1,1 +1,3 @@
 drop_table("apps")
+
+sql("DROP SEQUENCE seq_app")

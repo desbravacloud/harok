@@ -16,6 +16,20 @@ SET xmloption = content;
 SET client_min_messages = warning;
 SET row_security = off;
 
+--
+-- Name: seq_app; Type: SEQUENCE; Schema: public; Owner: app_harok
+--
+
+CREATE SEQUENCE public.seq_app
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.seq_app OWNER TO app_harok;
+
 SET default_tablespace = '';
 
 SET default_table_access_method = heap;
@@ -25,12 +39,12 @@ SET default_table_access_method = heap;
 --
 
 CREATE TABLE public.apps (
-    id integer NOT NULL,
+    id integer DEFAULT nextval('public.seq_app'::regclass) NOT NULL,
     name character varying(255) NOT NULL,
     hostname character varying(50) NOT NULL,
     language character varying(15) NOT NULL,
-    code_repo character varying(255) NOT NULL,
-    image_repo character varying(255) NOT NULL,
+    coderepo character varying(255) NOT NULL,
+    imagerepo character varying(255) NOT NULL,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL
 );
@@ -70,13 +84,6 @@ CREATE TABLE public.schema_migration (
 
 
 ALTER TABLE public.schema_migration OWNER TO app_harok;
-
---
--- Name: apps id; Type: DEFAULT; Schema: public; Owner: app_harok
---
-
-ALTER TABLE ONLY public.apps ALTER COLUMN id SET DEFAULT nextval('public.apps_id_seq'::regclass);
-
 
 --
 -- Name: apps apps_pkey; Type: CONSTRAINT; Schema: public; Owner: app_harok
