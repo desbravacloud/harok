@@ -1,9 +1,9 @@
 development:
   dialect: postgres
-  database: myapp_development
+  database: example
   user: postgres
   password: postgres
-  host: 127.0.0.1
+  host: localhost
   pool: 5
 
 test:

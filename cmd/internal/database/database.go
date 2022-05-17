@@ -9,9 +9,9 @@ import (
 
 var DB *sql.DB
 
-var dsn = "host=localhost port=5432 dbname=test user=test password=test"
-
 func InsertIntoAppTable(app App) {
+
+	dsn, _ := getDBCredentials()
 
 	DB, err := driver.InitializeConnectionSQL(dsn)
 	if err != nil {
