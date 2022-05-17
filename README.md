@@ -14,7 +14,6 @@ If you want to build the binary:
 - `go build`
 
 # Running Migrations
-======
 
 Add your credentials in database.yml (you can create this file from database.yml.example at the root of the project)
 
@@ -37,7 +36,6 @@ soda migrate up
 ```
 
 # Authentication to Database
-======
 
 Create a file in $HOME/.harok/config.json
 
