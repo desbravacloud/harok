@@ -1,7 +1,6 @@
 package database
 
 import (
-	"fmt"
 	"io/ioutil"
 	"os"
 
@@ -14,7 +13,6 @@ func getDBCredentials() (dsn string, err error) {
 
 	content, err := ioutil.ReadFile(home + "/.harok/config.json") // the file is inside the local directory
 	if err != nil {
-		fmt.Println("Err")
 		return dsn, err
 	}
 	dbuser := gjson.Get(string(content), "credentials.db_user").String()

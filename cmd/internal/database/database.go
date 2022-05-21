@@ -2,14 +2,13 @@ package database
 
 import (
 	"database/sql"
-	"fmt"
 
 	"github.com/Spotlitebr/rocket/cmd/internal/driver"
 )
 
 var DB *sql.DB
 
-func InsertIntoAppTable(app App) {
+func InsertIntoAppTable(app App) error {
 
 	dsn, _ := getDBCredentials()
 
@@ -21,7 +20,7 @@ func InsertIntoAppTable(app App) {
 	_, err = DB.SQL.Exec("INSERT INTO apps (id, name, hostname, language, coderepo, imagerepo, created_at, updated_at) values (DEFAULT, $1, $2, $3, $4, $5, now(), now())", app.Name, app.Hostname, app.Language, app.CodeRepo, app.ImageRepo)
 
 	if err != nil {
-		fmt.Println(err)
+		return err
 	}
-	fmt.Println("App registered successfully!")
+	return nil
 }

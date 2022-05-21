@@ -8,6 +8,7 @@ import (
 	"fmt"
 
 	"github.com/Spotlitebr/rocket/cmd/internal/database"
+	"github.com/Spotlitebr/rocket/cmd/internal/svn"
 	"github.com/spf13/cobra"
 )
 
@@ -51,8 +52,17 @@ var createAppCmd = &cobra.Command{
 		app.CodeRepo = codeRepo
 		app.ImageRepo = imageRepo
 
-		database.InsertIntoAppTable(*app)
-		fmt.Println("createApp called")
+		err = svn.CreateRepo(name, true)
+		if err != nil {
+			panic(err)
+		}
+
+		err = database.InsertIntoAppTable(*app)
+		if err != nil {
+			panic(err)
+		} else {
+			fmt.Println("App has been created successfully!!!")
+		}
 	},
 }
 
@@ -64,4 +74,10 @@ func init() {
 	createAppCmd.Flags().StringP("language", "l", "", "Application language")
 	createAppCmd.Flags().StringP("codeRepo", "r", "", "Application repository")
 	createAppCmd.Flags().StringP("imageRepo", "i", "", "Application image repo")
+
+	createAppCmd.MarkFlagRequired("name")
+	createAppCmd.MarkFlagRequired("hostname")
+	createAppCmd.MarkFlagRequired("language")
+	createAppCmd.MarkFlagRequired("codeRepo")
+	createAppCmd.MarkFlagRequired("imageRepo")
 }
