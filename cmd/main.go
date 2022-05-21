@@ -2,7 +2,7 @@
 Copyright © 2022 Spotlite
 
 */
-package rocket
+package harok
 
 import (
 	"os"
@@ -12,9 +12,9 @@ import (
 
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
-	Use:   "rocket",
+	Use:   "harok",
 	Short: "CLI for managing your infrastructure",
-	Long:  `Rocket is a SRE tool created to automate and manage your infrastructure`,
+	Long:  `harok is a SRE tool created to automate and manage your infrastructure`,
 }
 
 func Execute() {

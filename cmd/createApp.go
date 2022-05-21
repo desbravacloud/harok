@@ -2,13 +2,13 @@
 Copyright © 2022 NAME HERE <EMAIL ADDRESS>
 
 */
-package rocket
+package harok
 
 import (
 	"fmt"
 
-	"github.com/Spotlitebr/rocket/cmd/internal/database"
-	"github.com/Spotlitebr/rocket/cmd/internal/svn"
+	"github.com/Spotlitebr/harok/cmd/internal/database"
+	"github.com/Spotlitebr/harok/cmd/internal/svn"
 	"github.com/spf13/cobra"
 )
 

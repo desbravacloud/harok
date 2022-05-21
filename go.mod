@@ -1,4 +1,4 @@
-module github.com/Spotlitebr/rocket
+module github.com/Spotlitebr/harok
 
 go 1.18
 

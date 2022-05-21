@@ -3,7 +3,7 @@ package database
 import (
 	"database/sql"
 
-	"github.com/Spotlitebr/rocket/cmd/internal/driver"
+	"github.com/Spotlitebr/harok/cmd/internal/driver"
 )
 
 var DB *sql.DB

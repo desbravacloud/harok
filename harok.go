@@ -5,9 +5,9 @@ Copyright © 2022 Spotlite
 package main
 
 import (
-	rocket "github.com/Spotlitebr/rocket/cmd"
+	harok "github.com/Spotlitebr/harok/cmd"
 )
 
 func main() {
-	rocket.Execute()
+	harok.Execute()
 }
