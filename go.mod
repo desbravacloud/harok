@@ -1,6 +1,6 @@
 module github.com/Spotlitebr/harok
 
-go 1.18
+go 1.17
 
 require github.com/spf13/cobra v1.4.0
 
@@ -44,7 +44,6 @@ require (
 	github.com/google/btree v1.0.1 // indirect
 	github.com/google/go-cmp v0.5.8 // indirect
 	github.com/google/go-github v17.0.0+incompatible
-	github.com/google/go-github/v44 v44.1.0 // indirect
 	github.com/google/gofuzz v1.1.0 // indirect
 	github.com/google/shlex v0.0.0-20191202100458-e7afc7fbc510 // indirect
 	github.com/google/uuid v1.2.0 // indirect
@@ -56,13 +55,13 @@ require (
 	github.com/imdario/mergo v0.3.12 // indirect
 	github.com/inconshreveable/mousetrap v1.0.0 // indirect
 	github.com/jackc/chunkreader/v2 v2.0.1 // indirect
-	github.com/jackc/pgconn v1.12.0 // indirect
+	github.com/jackc/pgconn v1.12.0
 	github.com/jackc/pgio v1.0.0 // indirect
 	github.com/jackc/pgpassfile v1.0.0 // indirect
 	github.com/jackc/pgproto3/v2 v2.3.0 // indirect
 	github.com/jackc/pgservicefile v0.0.0-20200714003250-2b9c44734f2b // indirect
 	github.com/jackc/pgtype v1.11.0 // indirect
-	github.com/jackc/pgx/v4 v4.16.0 // indirect
+	github.com/jackc/pgx/v4 v4.16.0
 	github.com/jmoiron/sqlx v1.3.4 // indirect
 	github.com/josharian/intern v1.0.0 // indirect
 	github.com/json-iterator/go v1.1.12 // indirect
@@ -79,7 +78,7 @@ require (
 	github.com/mitchellh/copystructure v1.2.0 // indirect
 	github.com/mitchellh/go-wordwrap v1.0.0 // indirect
 	github.com/mitchellh/reflectwalk v1.0.2 // indirect
-	github.com/mittwald/go-helm-client v0.9.1 // indirect
+	github.com/mittwald/go-helm-client v0.9.1
 	github.com/moby/locker v1.0.1 // indirect
 	github.com/moby/spdystream v0.2.0 // indirect
 	github.com/moby/term v0.0.0-20210610120745-9d4ed1856297 // indirect
@@ -103,7 +102,7 @@ require (
 	github.com/spf13/cast v1.4.1 // indirect
 	github.com/spf13/pflag v1.0.5 // indirect
 	github.com/stretchr/testify v1.7.0 // indirect
-	github.com/tidwall/gjson v1.14.1 // indirect
+	github.com/tidwall/gjson v1.14.1
 	github.com/tidwall/match v1.1.1 // indirect
 	github.com/tidwall/pretty v1.2.0 // indirect
 	github.com/xeipuuv/gojsonpointer v0.0.0-20180127040702-4e3ac2762d5f // indirect
@@ -113,7 +112,7 @@ require (
 	go.starlark.net v0.0.0-20200306205701-8dd3e2ee1dd5 // indirect
 	golang.org/x/crypto v0.0.0-20211117183948-ae814b36b871 // indirect
 	golang.org/x/net v0.0.0-20220107192237-5cfca573fb4d // indirect
-	golang.org/x/oauth2 v0.0.0-20211104180415-d3ed0bb246c8 // indirect
+	golang.org/x/oauth2 v0.0.0-20211104180415-d3ed0bb246c8
 	golang.org/x/sync v0.0.0-20210220032951-036812b2e83c // indirect
 	golang.org/x/sys v0.0.0-20220227234510-4e6760a101f9 // indirect
 	golang.org/x/term v0.0.0-20210615171337-6886f2dfbf5b // indirect
@@ -127,13 +126,13 @@ require (
 	gopkg.in/inf.v0 v0.9.1 // indirect
 	gopkg.in/yaml.v2 v2.4.0 // indirect
 	gopkg.in/yaml.v3 v3.0.0-20210107192922-496545a6307b // indirect
-	helm.sh/helm/v3 v3.8.0 // indirect
+	helm.sh/helm/v3 v3.8.0
 	k8s.io/api v0.23.1 // indirect
 	k8s.io/apiextensions-apiserver v0.23.1 // indirect
 	k8s.io/apimachinery v0.23.1 // indirect
 	k8s.io/apiserver v0.23.1 // indirect
 	k8s.io/cli-runtime v0.23.1 // indirect
-	k8s.io/client-go v0.23.1 // indirect
+	k8s.io/client-go v0.23.1
 	k8s.io/component-base v0.23.1 // indirect
 	k8s.io/klog/v2 v2.30.0 // indirect
 	k8s.io/kube-openapi v0.0.0-20211115234752-e816edb12b65 // indirect
