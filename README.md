@@ -1,7 +1,7 @@
-harok
+Harok
 ======
 
-harok is a SRE tool created to automate and manage your infrastructure
+Harok is a SRE tool created to automate and manage your infrastructure
 
 # Install
 
@@ -48,7 +48,8 @@ Create a file in $HOME/.harok/config.json
     "db_database": "example",
     "db_port": "5432",
     "github_token" : "12345678",
-    "github_org" : "spotlitebr"
+    "github_org" : "spotlitebr",
+    "jenkins_address": "https://jenkins.teste.io",
   }
 }
 ```

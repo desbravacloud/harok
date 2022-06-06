@@ -1,7 +1,6 @@
 package svn
 
 import (
-	"fmt"
 	"io/ioutil"
 	"os"
 
@@ -15,7 +14,6 @@ func getGitHubToken() (token string, err error) {
 
 	content, err := ioutil.ReadFile(home + path) // the file is inside the local directory
 	if err != nil {
-		fmt.Println("Err")
 		return token, err
 	}
 	token = gjson.Get(string(content), "credentials.github_token").String()
@@ -27,10 +25,20 @@ func getGitHubOrganization() (org string, err error) {
 
 	content, err := ioutil.ReadFile(home + path) // the file is inside the local directory
 	if err != nil {
-		fmt.Println("Err")
 		return org, err
 	}
 	org = gjson.Get(string(content), "credentials.github_org").String()
 
 	return org, err
+}
+
+func getJenkinsAddress() (jenkinsAddress string, err error) {
+
+	content, err := ioutil.ReadFile(home + path) // the file is inside the local directory
+	if err != nil {
+		return jenkinsAddress, err
+	}
+	jenkinsAddress = gjson.Get(string(content), "credentials.jenkins_address").String()
+
+	return jenkinsAddress, err
 }

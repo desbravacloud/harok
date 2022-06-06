@@ -1,7 +1,10 @@
 package svn
 
 import (
+	"bytes"
 	"context"
+	"encoding/json"
+	"net/http"
 
 	"github.com/google/go-github/github"
 	"golang.org/x/oauth2"
@@ -9,9 +12,17 @@ import (
 
 var gitClient *github.Client = runGithub()
 var gitOrg, _ = getGitHubOrganization()
+var token, _ = getGitHubToken()
+var jenkinsAddress, _ = getJenkinsAddress()
+
+type Content struct {
+	Name   string            `json:"name"`
+	Active bool              `json:"active"`
+	Events []string          `json:"events"`
+	Config map[string]string `json:"config"`
+}
 
 func runGithub() *github.Client {
-	token, _ := getGitHubToken()
 	ts := oauth2.StaticTokenSource(
 		&oauth2.Token{AccessToken: token},
 	)
@@ -41,12 +52,42 @@ func CreateRepo(name string, private bool) error {
 	return nil
 }
 
-/*
-func ListRepositories() {
-	repos, _, err := gitClient.Repositories.ListByOrg(setGithubCtx(), gitOrg, nil)
+func CreateWebHooks(repoName string) error {
+	reqBody, err := json.Marshal(Content{
+		Name:   "web",
+		Active: true,
+		Events: []string{"push", "pull_request"},
+		Config: map[string]string{"url": jenkinsAddress + "/multibranch-webhook-trigger/invoke?token=" + repoName, "content_type": "json"},
+	})
 	if err != nil {
-		fmt.Println(err)
+		return err
 	}
-	fmt.Println(repos)
+
+	client := &http.Client{}
+
+	req, err := http.NewRequest("POST", "https://api.github.com/repos/"+gitOrg+"/"+repoName+"/hooks", bytes.NewBuffer(reqBody))
+	req.Header = http.Header{
+		"Authorization": {"Bearer " + token},
+		"Content-Type":  {"application/json"},
+	}
+	if err != nil {
+		return err
+	}
+
+	resp, err := client.Do(req)
+	if err != nil {
+		return err
+	}
+
+	defer resp.Body.Close()
+	defer req.Body.Close()
+
+	// get reponse from creating webhooks
+	// body, err := ioutil.ReadAll(resp.Body)
+	// if err != nil {
+	// 	return err
+	// }
+	// fmt.Println(string(body))
+
+	return nil
 }
-*/

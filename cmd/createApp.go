@@ -57,6 +57,11 @@ var createAppCmd = &cobra.Command{
 			panic(err)
 		}
 
+		err = svn.CreateWebHooks(name)
+		if err != nil {
+			panic(err)
+		}
+
 		err = database.InsertIntoAppTable(*app)
 		if err != nil {
 			panic(err)
