@@ -50,6 +50,8 @@ Create a file in $HOME/.harok/config.json
     "github_token" : "12345678",
     "github_org" : "spotlitebr",
     "jenkins_address": "https://jenkins.teste.io",
+    "jenkins_user": "jenkinsUser",
+    "jenkins_token": "1234567890"
   }
 }
 ```

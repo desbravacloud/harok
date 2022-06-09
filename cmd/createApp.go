@@ -8,6 +8,7 @@ import (
 	"fmt"
 
 	"github.com/Spotlitebr/harok/cmd/internal/database"
+	"github.com/Spotlitebr/harok/cmd/internal/jenkins"
 	"github.com/Spotlitebr/harok/cmd/internal/svn"
 	"github.com/spf13/cobra"
 )
@@ -61,7 +62,10 @@ var createAppCmd = &cobra.Command{
 		if err != nil {
 			panic(err)
 		}
-
+		jenkins.CreateJob(name)
+		if err != nil {
+			panic(err)
+		}
 		err = database.InsertIntoAppTable(*app)
 		if err != nil {
 			panic(err)
