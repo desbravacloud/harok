@@ -57,12 +57,11 @@ var createAppCmd = &cobra.Command{
 		if err != nil {
 			panic(err)
 		}
-
 		err = svn.CreateWebHooks(name)
 		if err != nil {
 			panic(err)
 		}
-		jenkins.CreateJob(name)
+		err = jenkins.CreateJob(name)
 		if err != nil {
 			panic(err)
 		}

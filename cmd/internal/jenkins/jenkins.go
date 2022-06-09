@@ -28,7 +28,7 @@ func runJenkins() *gojenkins.Jenkins {
 	return jenkins
 }
 
-func CreateJob(jobName string) (*gojenkins.Job, error) {
+func CreateJob(jobName string) error {
 	configString := `<?xml version='1.1' encoding='UTF-8'?>
 	<org.jenkinsci.plugins.workflow.multibranch.WorkflowMultiBranchProject plugin="workflow-multibranch@latest">
 	  <actions/>
@@ -68,9 +68,9 @@ func CreateJob(jobName string) (*gojenkins.Job, error) {
 	  <buildWrappers/>
 	  </org.jenkinsci.plugins.workflow.multibranch.WorkflowMultiBranchProject>`
 
-	job, err := runJenkins().CreateJob(setJenkinsCtx(), configString, jobName)
+	_, err := runJenkins().CreateJob(setJenkinsCtx(), configString, jobName)
 	if err != nil {
-		return nil, err
+		return err
 	}
-	return job, nil
+	return nil
 }
